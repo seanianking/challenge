@@ -28,12 +28,12 @@ function App() {
           character: api.router.get('character'),
         };
       },
-      nav: false,
+      nav: true,
       name: 'Character',
     },
     {
       id: 'seasons',
-      nav: true,
+      nav: false,
       // component: Home,
       name: 'Seasons',
     },

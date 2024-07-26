@@ -5,12 +5,15 @@ import api from 'api.js';
 
 function Characters() {
   const [data, setData] = useState(null);
+  const [page, setPage] = useState(2)
+
   useEffect(() => {
-    fetch('https://theofficeapi.dev/api/characters?limit=50', {
+    fetch(`https://theofficeapi.dev/api/characters?limit=50&page=${page}`, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         setData(data);
       })
       .catch((error) => console.log(error));
@@ -39,9 +42,10 @@ function Characters() {
 
 function Character({ character }) {
   return (
-    <a onClick={(e) => api.router.click(e, { tab: 'character', character: character.id })} href="/">
+    <a onClick={(e) => api.router.click(e, { tab: 'character', character: character.id })} href={`/${character.id}`}>
       {character.name}
     </a>
+
   );
 }
 

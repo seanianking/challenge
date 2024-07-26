@@ -3,18 +3,25 @@ import api from 'api.js';
 
 function Head({ tabs }) {
   let eTabs = tabs.map((tab) => {
-    return <Tab key={tab.id} {...{ tab }} />;
+    if (tab.nav) {
+
+      return <Tab key={tab.id} {...{ tab }} />;
+    }
   });
 
   return (
+
+
     <div className="head">
       <div className="head-nav">{eTabs}</div>
     </div>
+
   );
 }
 
 function Tab({ tab }) {
   return (
+
     <a
       className={api.router.get('tab') === tab.id ? 'active' : ''}
       onClick={(event) => {
@@ -24,6 +31,7 @@ function Tab({ tab }) {
     >
       {tab.name}
     </a>
+
   );
 }
 
