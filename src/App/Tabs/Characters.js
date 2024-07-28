@@ -5,19 +5,18 @@ import api from 'api.js';
 
 function Characters() {
   const [data, setData] = useState(null);
-  const [page, setPage] = useState(2)
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
-    fetch(`https://theofficeapi.dev/api/characters?limit=50&page=${page}`, {
+    fetch(`https://theofficeapi.dev/api/characters?limit=10&page=${page}`, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         setData(data);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [page]);
 
   if (!data) return '...';
 
@@ -32,10 +31,22 @@ function Characters() {
     );
   });
 
+  let handlePageChange = (e) => {
+    e.target.name === "Last" ? setPage(page - 1) : setPage(page + 1)
+  }
+
   return (
     <div>
       <h2>characters:</h2>
       <div className="characters">{eCharacters}</div>
+      <div >
+        {!data.meta.isFirstPage &&
+          <button name="Last" onClick={handlePageChange}>Last</button>
+        }
+        {!data.meta.isLastPage &&
+          <button name="Next" onClick={handlePageChange}>Next</button>
+        }
+      </div>
     </div>
   );
 }
